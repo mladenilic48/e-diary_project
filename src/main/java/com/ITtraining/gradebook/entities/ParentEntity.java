@@ -1,13 +1,22 @@
 package com.ITtraining.gradebook.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name="parents")
+@Table(name = "parents")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class ParentEntity extends UserEntity {
 
 	@Column(name = "Id")
@@ -23,6 +32,10 @@ public class ParentEntity extends UserEntity {
 
 	@Column(name = "email")
 	private String email;
+
+	@OneToMany(mappedBy = "pupil_Parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<PupilEntity> parent_Pupils;
 
 	public ParentEntity() {
 		super();
@@ -58,6 +71,14 @@ public class ParentEntity extends UserEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<PupilEntity> getParent_Pupils() {
+		return parent_Pupils;
+	}
+
+	public void setParent_Pupils(List<PupilEntity> parent_Pupils) {
+		this.parent_Pupils = parent_Pupils;
 	}
 
 }
