@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "pupils")
@@ -25,6 +26,7 @@ public class PupilEntity extends UserEntity {
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@Column(name = "name")

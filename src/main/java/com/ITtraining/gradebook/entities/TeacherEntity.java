@@ -1,7 +1,6 @@
 package com.ITtraining.gradebook.entities;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "teachers")
@@ -24,6 +24,7 @@ public class TeacherEntity extends UserEntity {
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@Column(name = "name")
@@ -34,12 +35,6 @@ public class TeacherEntity extends UserEntity {
 
 	@Column(name = "vocation")
 	private String vocation;
-
-	@Column(name = "date_of_birth")
-	private Date dateOfBirth;
-
-	@Column(name = "edu_title")
-	private String educationTitle;
 
 	@OneToMany(mappedBy = "subject_Teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -83,22 +78,6 @@ public class TeacherEntity extends UserEntity {
 
 	public void setVocation(String vocation) {
 		this.vocation = vocation;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public String getEducationTitle() {
-		return educationTitle;
-	}
-
-	public void setEducationTitle(String educationTitle) {
-		this.educationTitle = educationTitle;
 	}
 
 	public List<SubjectEntity> getTeacher_Subjects() {

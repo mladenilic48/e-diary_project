@@ -36,9 +36,6 @@ public class SubjectEntity {
 	@Column(name = "teach_class")
 	private Integer teachingClass;
 
-	@Column(name = "des_grade")
-	private Boolean isDescriptionGrade;
-
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_teacher")
 	private TeacherEntity subject_Teacher;
@@ -81,14 +78,6 @@ public class SubjectEntity {
 
 	public void setTeachingClass(Integer teachingClass) {
 		this.teachingClass = teachingClass;
-	}
-
-	public Boolean getIsDescriptionGrade() {
-		return isDescriptionGrade;
-	}
-
-	public void setIsDescriptionGrade(Boolean isDescriptionGrade) {
-		this.isDescriptionGrade = isDescriptionGrade;
 	}
 
 	public TeacherEntity getSubject_Teacher() {

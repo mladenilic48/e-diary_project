@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "grades")
@@ -22,13 +23,11 @@ public class GradeEntity {
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@Column(name = "grade")
 	private Integer grade;
-
-	@Column(name = "description")
-	private String description;
 
 	@OneToMany(mappedBy = "pupilGrade_Grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -52,14 +51,6 @@ public class GradeEntity {
 
 	public void setGrade(Integer grade) {
 		this.grade = grade;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public List<PupilGradeEntity> getGrade_PupilGrades() {

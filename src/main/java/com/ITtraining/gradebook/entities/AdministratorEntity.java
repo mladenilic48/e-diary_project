@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "administrators")
 public class AdministratorEntity extends UserEntity {
@@ -13,6 +15,7 @@ public class AdministratorEntity extends UserEntity {
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@Column(name = "name")
