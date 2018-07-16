@@ -17,9 +17,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "parents")
+@Table(name = "category_grades")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class ParentEntity extends UserEntity {
+public class CategoryGradesEntity {
 
 	@Column(name = "Id")
 	@Id
@@ -27,14 +27,14 @@ public class ParentEntity extends UserEntity {
 	@JsonProperty("Id")
 	private Integer id;
 
-	@Column(name = "email")
-	private String email;
+	@Column
+	private String category;
 
-	@OneToMany(mappedBy = "pupil_Parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "creatingGrades_CategoryGrade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<PupilEntity> parent_Pupils = new ArrayList<>();
+	private List<CreatingGradesEntity> categoryGrades_CreatingGrades = new ArrayList<>();
 
-	public ParentEntity() {
+	public CategoryGradesEntity() {
 		super();
 	}
 
@@ -46,20 +46,20 @@ public class ParentEntity extends UserEntity {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public List<PupilEntity> getParent_Pupils() {
-		return parent_Pupils;
+	public List<CreatingGradesEntity> getCategoryGrades_CreatingGrades() {
+		return categoryGrades_CreatingGrades;
 	}
 
-	public void setParent_Pupils(List<PupilEntity> parent_Pupils) {
-		this.parent_Pupils = parent_Pupils;
+	public void setCategoryGrades_CreatingGrades(List<CreatingGradesEntity> categoryGrades_CreatingGrades) {
+		this.categoryGrades_CreatingGrades = categoryGrades_CreatingGrades;
 	}
 
 }

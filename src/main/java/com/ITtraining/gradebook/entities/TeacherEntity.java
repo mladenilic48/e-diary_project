@@ -27,22 +27,20 @@ public class TeacherEntity extends UserEntity {
 	@JsonProperty("Id")
 	private Integer id;
 
-	@Column(name = "name")
-	private String name;
-
-	@Column(name = "surname")
-	private String surname;
-
 	@Column(name = "vocation")
 	private String vocation;
 
-	@OneToMany(mappedBy = "subject_Teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "teacherSubject_Teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<SubjectEntity> teacher_Subjects = new ArrayList<>();
+	private List<TeacherSubjectEntity> teacher_TeacherSubjects = new ArrayList<>();
 
 	@OneToMany(mappedBy = "teacherPupil_Teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<TeacherPupilEntity> teacher_TeacherPupils = new ArrayList<>();
+
+	@OneToMany(mappedBy = "teacherSchool_Teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<TeacherSchoolEntity> teacher_TeacherSchool = new ArrayList<>();
 
 	public TeacherEntity() {
 		super();
@@ -56,22 +54,6 @@ public class TeacherEntity extends UserEntity {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 	public String getVocation() {
 		return vocation;
 	}
@@ -80,19 +62,27 @@ public class TeacherEntity extends UserEntity {
 		this.vocation = vocation;
 	}
 
-	public List<SubjectEntity> getTeacher_Subjects() {
-		return teacher_Subjects;
-	}
-
-	public void setTeacher_Subjects(List<SubjectEntity> teacher_Subjects) {
-		this.teacher_Subjects = teacher_Subjects;
-	}
-
 	public List<TeacherPupilEntity> getTeacher_TeacherPupils() {
 		return teacher_TeacherPupils;
 	}
 
 	public void setTeacher_TeacherPupils(List<TeacherPupilEntity> teacher_TeacherPupils) {
 		this.teacher_TeacherPupils = teacher_TeacherPupils;
+	}
+
+	public List<TeacherSubjectEntity> getTeacher_TeacherSubjects() {
+		return teacher_TeacherSubjects;
+	}
+
+	public void setTeacher_TeacherSubjects(List<TeacherSubjectEntity> teacher_TeacherSubjects) {
+		this.teacher_TeacherSubjects = teacher_TeacherSubjects;
+	}
+
+	public List<TeacherSchoolEntity> getTeacher_TeacherSchool() {
+		return teacher_TeacherSchool;
+	}
+
+	public void setTeacher_TeacherSchool(List<TeacherSchoolEntity> teacher_TeacherSchool) {
+		this.teacher_TeacherSchool = teacher_TeacherSchool;
 	}
 }

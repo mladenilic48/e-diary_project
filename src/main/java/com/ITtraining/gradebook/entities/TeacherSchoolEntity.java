@@ -10,24 +10,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "teacher_pupil")
-public class TeacherPupilEntity {
+@Table(name = "teacher_school")
+public class TeacherSchoolEntity {
 
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher")
-	private TeacherEntity teacherPupil_Teacher;
+	private TeacherEntity teacherSchool_Teacher;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pupil")
-	private PupilEntity teacherPupil_Pupil;
+	@JoinColumn(name = "school")
+	private SchoolEntity teacherSchool_School;
 
-	public TeacherPupilEntity() {
+	public TeacherSchoolEntity() {
 		super();
 	}
 
@@ -39,20 +42,20 @@ public class TeacherPupilEntity {
 		this.id = id;
 	}
 
-	public TeacherEntity getTeacherPupil_Teacher() {
-		return teacherPupil_Teacher;
+	public TeacherEntity getTeacherSchool_Teacher() {
+		return teacherSchool_Teacher;
 	}
 
-	public void setTeacherPupil_Teacher(TeacherEntity teacherPupil_Teacher) {
-		this.teacherPupil_Teacher = teacherPupil_Teacher;
+	public void setTeacherSchool_Teacher(TeacherEntity teacherSchool_Teacher) {
+		this.teacherSchool_Teacher = teacherSchool_Teacher;
 	}
 
-	public PupilEntity getTeacherPupil_Pupil() {
-		return teacherPupil_Pupil;
+	public SchoolEntity getTeacherSchool_School() {
+		return teacherSchool_School;
 	}
 
-	public void setTeacherPupil_Pupil(PupilEntity teacherPupil_Pupil) {
-		this.teacherPupil_Pupil = teacherPupil_Pupil;
+	public void setTeacherSchool_School(SchoolEntity teacherSchool_School) {
+		this.teacherSchool_School = teacherSchool_School;
 	}
 
 }

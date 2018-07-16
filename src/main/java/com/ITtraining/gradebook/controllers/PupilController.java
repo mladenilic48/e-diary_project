@@ -55,8 +55,8 @@ public class PupilController {
 		pupilEntity.setUsername(newPupil.getUsername());
 		pupilEntity.setPassword(newPupil.getPassword());
 		pupilEntity.setUniquePupilNumber(newPupil.getUniquePupilNumber());
-		pupilEntity.setSchoolClass(newPupil.getSchoolClass());
-		pupilEntity.setClassNumber(newPupil.getClassNumber());
+//		pupilEntity.setSchoolClass(newPupil.getSchoolClass());
+//		pupilEntity.setClassNumber(newPupil.getClassNumber());
 
 		return new ResponseEntity<PupilEntity>(pupilRepo.save(pupilEntity), HttpStatus.OK);
 	}
@@ -91,13 +91,13 @@ public class PupilController {
 			pupilEntity.setUniquePupilNumber(updatedPupil.getUniquePupilNumber());
 		}
 
-		if (updatedPupil.getSchoolClass() != null) {
-			pupilEntity.setSchoolClass(updatedPupil.getSchoolClass());
-		}
-
-		if (updatedPupil.getClassNumber() != null) {
-			pupilEntity.setClassNumber(updatedPupil.getClassNumber());
-		}
+//		if (updatedPupil.getSchoolClass() != null) {
+//			pupilEntity.setSchoolClass(updatedPupil.getSchoolClass());
+//		}
+//
+//		if (updatedPupil.getClassNumber() != null) {
+//			pupilEntity.setClassNumber(updatedPupil.getClassNumber());
+//		}
 
 		return new ResponseEntity<PupilEntity>(pupilRepo.save(pupilEntity), HttpStatus.OK);
 	}

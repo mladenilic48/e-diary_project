@@ -22,20 +22,21 @@ public abstract class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "username")
+	@Column
 	private String username;
 
-	@Column(name = "password")
+	@Column
 	@JsonIgnore
 	private String password;
 
+	@Column
+	private String name;
+
+	@Column
+	private String surname;
+
 	public UserEntity() {
 		super();
-	}
-
-	public UserEntity(String username, String password) {
-		this.username = username;
-		this.password = password;
 	}
 
 	public String getUsername() {
@@ -60,5 +61,21 @@ public abstract class UserEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 }

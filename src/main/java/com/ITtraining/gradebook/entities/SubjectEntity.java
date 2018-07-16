@@ -9,13 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "subjects")
@@ -25,6 +24,7 @@ public class SubjectEntity {
 	@Column(name = "Id")
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
 
 	@Column(name = "name")
@@ -33,16 +33,17 @@ public class SubjectEntity {
 	@Column(name = "teach_load")
 	private Integer teachingLoad;
 
-	@Column(name = "teach_class")
-	private Integer teachingClass;
-
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "subject_teacher")
-	private TeacherEntity subject_Teacher;
-
-	@OneToMany(mappedBy = "pupilSubject_Subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "teacherSubject_Subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<PupilSubjectEntity> subject_PupilSubjects = new ArrayList<>();
+	private List<TeacherSubjectEntity> subject_TeacherSubject = new ArrayList<>();
+
+	@OneToMany(mappedBy = "creatingGrades_Subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<CreatingGradesEntity> subject_CreatingGrades = new ArrayList<>();
+
+	@OneToMany(mappedBy = "subjectGrade_subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<SubjectGradeEntity> subject_SubjectGrade = new ArrayList<>();
 
 	public SubjectEntity() {
 		super();
@@ -72,28 +73,28 @@ public class SubjectEntity {
 		this.teachingLoad = teachingLoad;
 	}
 
-	public Integer getTeachingClass() {
-		return teachingClass;
+	public List<TeacherSubjectEntity> getSubject_TeacherSubject() {
+		return subject_TeacherSubject;
 	}
 
-	public void setTeachingClass(Integer teachingClass) {
-		this.teachingClass = teachingClass;
+	public void setSubject_TeacherSubject(List<TeacherSubjectEntity> subject_TeacherSubject) {
+		this.subject_TeacherSubject = subject_TeacherSubject;
 	}
 
-	public TeacherEntity getSubject_Teacher() {
-		return subject_Teacher;
+	public List<CreatingGradesEntity> getSubject_CreatingGrades() {
+		return subject_CreatingGrades;
 	}
 
-	public void setSubject_Teacher(TeacherEntity subject_Teacher) {
-		this.subject_Teacher = subject_Teacher;
+	public void setSubject_CreatingGrades(List<CreatingGradesEntity> subject_CreatingGrades) {
+		this.subject_CreatingGrades = subject_CreatingGrades;
 	}
 
-	public List<PupilSubjectEntity> getSubject_PupilSubject() {
-		return subject_PupilSubjects;
+	public List<SubjectGradeEntity> getSubject_SubjectGrade() {
+		return subject_SubjectGrade;
 	}
 
-	public void setSubject_PupilSubject(List<PupilSubjectEntity> subject_PupilSubject) {
-		this.subject_PupilSubjects = subject_PupilSubject;
+	public void setSubject_SubjectGrade(List<SubjectGradeEntity> subject_SubjectGrade) {
+		this.subject_SubjectGrade = subject_SubjectGrade;
 	}
 
 }

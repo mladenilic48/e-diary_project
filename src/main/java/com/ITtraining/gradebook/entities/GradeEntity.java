@@ -1,5 +1,6 @@
 package com.ITtraining.gradebook.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,9 +30,9 @@ public class GradeEntity {
 	@Column(name = "grade")
 	private Integer grade;
 
-	@OneToMany(mappedBy = "pupilGrade_Grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "creatingGrades_Grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<PupilGradeEntity> grade_PupilGrades;
+	private List<CreatingGradesEntity> grade_CreatingGrades = new ArrayList<>();
 
 	public GradeEntity() {
 		super();
@@ -53,12 +54,12 @@ public class GradeEntity {
 		this.grade = grade;
 	}
 
-	public List<PupilGradeEntity> getGrade_PupilGrades() {
-		return grade_PupilGrades;
+	public List<CreatingGradesEntity> getGrade_CreatingGrades() {
+		return grade_CreatingGrades;
 	}
 
-	public void setGrade_PupilGrades(List<PupilGradeEntity> grade_PupilGrades) {
-		this.grade_PupilGrades = grade_PupilGrades;
+	public void setGrade_CreatingGrades(List<CreatingGradesEntity> grade_CreatingGrades) {
+		this.grade_CreatingGrades = grade_CreatingGrades;
 	}
 
 }

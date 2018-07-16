@@ -29,36 +29,28 @@ public class PupilEntity extends UserEntity {
 	@JsonProperty("Id")
 	private Integer id;
 
-	@Column(name = "name")
-	private String name;
-
-	@Column(name = "surname")
-	private String surname;
-
 	@Column(name = "uni_pupil_no")
 	private String uniquePupilNumber;
-
-	@Column(name = "school_class")
-	private Integer schoolClass;
-
-	@Column(name = "class_no")
-	private Integer classNumber;
 
 	@OneToMany(mappedBy = "teacherPupil_Pupil", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<TeacherPupilEntity> pupil_TeacherPupils = new ArrayList<>();
 
-	@OneToMany(mappedBy = "pupilGrade_Pupil", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "creatingGrades_Pupil", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<PupilGradeEntity> pupil_PupilGrade = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pupilSubject_Pupil", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<PupilSubjectEntity> pupil_PupilSubject = new ArrayList<>();
+	private List<CreatingGradesEntity> pupil_CreatingGrades = new ArrayList<>();
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_Id")
+	@JoinColumn(name = "parent")
 	private ParentEntity pupil_Parent;
+
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "school_class")
+	private SchoolClassEntity pupil_SchoolClass;
+
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "school")
+	private SchoolEntity school;
 
 	public PupilEntity() {
 		super();
@@ -72,44 +64,12 @@ public class PupilEntity extends UserEntity {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 	public String getUniquePupilNumber() {
 		return uniquePupilNumber;
 	}
 
 	public void setUniquePupilNumber(String uniquePupilNumber) {
 		this.uniquePupilNumber = uniquePupilNumber;
-	}
-
-	public Integer getSchoolClass() {
-		return schoolClass;
-	}
-
-	public void setSchoolClass(Integer schoolClass) {
-		this.schoolClass = schoolClass;
-	}
-
-	public Integer getClassNumber() {
-		return classNumber;
-	}
-
-	public void setClassNumber(Integer classNumber) {
-		this.classNumber = classNumber;
 	}
 
 	public List<TeacherPupilEntity> getPupil_TeacherPupils() {
@@ -120,28 +80,36 @@ public class PupilEntity extends UserEntity {
 		this.pupil_TeacherPupils = pupil_TeacherPupils;
 	}
 
-	public List<PupilGradeEntity> getPupil_PupilGrade() {
-		return pupil_PupilGrade;
-	}
-
-	public void setPupil_PupilGrade(List<PupilGradeEntity> pupil_PupilGrade) {
-		this.pupil_PupilGrade = pupil_PupilGrade;
-	}
-
-	public List<PupilSubjectEntity> getPupil_PupilSubject() {
-		return pupil_PupilSubject;
-	}
-
-	public void setPupil_PupilSubject(List<PupilSubjectEntity> pupil_PupilSubject) {
-		this.pupil_PupilSubject = pupil_PupilSubject;
-	}
-
 	public ParentEntity getPupil_Parent() {
 		return pupil_Parent;
 	}
 
 	public void setPupil_Parent(ParentEntity pupil_Parent) {
 		this.pupil_Parent = pupil_Parent;
+	}
+
+	public List<CreatingGradesEntity> getPupil_CreatingGrades() {
+		return pupil_CreatingGrades;
+	}
+
+	public void setPupil_CreatingGrades(List<CreatingGradesEntity> pupil_CreatingGrades) {
+		this.pupil_CreatingGrades = pupil_CreatingGrades;
+	}
+
+	public SchoolClassEntity getPupil_SchoolClass() {
+		return pupil_SchoolClass;
+	}
+
+	public void setPupil_SchoolClass(SchoolClassEntity pupil_SchoolClass) {
+		this.pupil_SchoolClass = pupil_SchoolClass;
+	}
+
+	public SchoolEntity getSchool() {
+		return school;
+	}
+
+	public void setSchool(SchoolEntity school) {
+		this.school = school;
 	}
 
 }
