@@ -37,7 +37,7 @@ public class PupilController {
 
 	@Autowired
 	private SchoolRepository schoolRepo;
-	
+
 	private String createErrorMessage(BindingResult result) {
 		String msg = " ";
 		for (ObjectError error : result.getAllErrors()) {
@@ -46,7 +46,6 @@ public class PupilController {
 		}
 		return msg;
 	}
-
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getPupils() {
@@ -65,16 +64,10 @@ public class PupilController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/parent/{parentId}/class/{classId}/school/{schoolId}")
-	public ResponseEntity<?> addPupil(@RequestBody PupilDTO newPupil, @PathVariable Integer parentId,
-			@PathVariable Integer classId, @PathVariable Integer schoolId) {
-
-		if (newPupil == null) {
-			return new ResponseEntity<RESTError>(new RESTError(2, "Pupil object is invalid."), HttpStatus.BAD_REQUEST);
-		}
-
-		if (newPupil.getName() == null || newPupil.getSurname() == null || newPupil.getUsername() == null
-				|| newPupil.getPassword() == null || newPupil.getUniquePupilNumber() == null) {
-			return new ResponseEntity<RESTError>(new RESTError(2, "Pupil object is invalid."), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> addPupil(@RequestBody PupilDTO newPupil, BindingResult result,
+			@PathVariable Integer parentId, @PathVariable Integer classId, @PathVariable Integer schoolId) {
+		if (result.hasErrors()) {
+			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
 		}
 
 		PupilEntity pupilEntity = new PupilEntity();

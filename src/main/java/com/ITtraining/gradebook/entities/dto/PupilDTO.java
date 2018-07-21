@@ -19,6 +19,7 @@ public class PupilDTO {
 	@NotNull(message = "Password must be provided.")
 	@Pattern(regexp = "^[A-Za-z0-9]{5,}$", message = "Password is not valid.")
 	private String password;
+	
 	private String uniquePupilNumber;
 
 	public PupilDTO() {
