@@ -38,7 +38,7 @@ public class SchoolEntity {
 
 	@OneToMany(mappedBy = "school", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<PupilEntity> school_Pupils = new ArrayList<>();
+	private List<PupilEntity> pupils = new ArrayList<>();
 
 	@OneToMany(mappedBy = "teacherSchool_School", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -80,12 +80,12 @@ public class SchoolEntity {
 		this.address = address;
 	}
 
-	public List<PupilEntity> getSchool_Pupils() {
-		return school_Pupils;
+	public List<PupilEntity> getPupils() {
+		return pupils;
 	}
 
-	public void setSchool_Pupils(List<PupilEntity> school_Pupils) {
-		this.school_Pupils = school_Pupils;
+	public void setPupils(List<PupilEntity> pupils) {
+		this.pupils = pupils;
 	}
 
 	public List<TeacherSchoolEntity> getSchool_TeacherSchool() {

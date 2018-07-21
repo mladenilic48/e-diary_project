@@ -34,9 +34,9 @@ public class SchoolGradeEntity {
 	@JsonIgnore
 	private List<SubjectGradeEntity> schoolGrade_SubjectGrade = new ArrayList<>();
 
-	@OneToMany(mappedBy = "schoolClass_SchoolGrade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "schoolGrade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<SchoolClassEntity> schoolGrade_SchoolClass = new ArrayList<>();
+	private List<SchoolClassEntity> schoolClass = new ArrayList<>();
 
 	public SchoolGradeEntity() {
 		super();
@@ -66,12 +66,12 @@ public class SchoolGradeEntity {
 		this.schoolGrade_SubjectGrade = schoolGrade_SubjectGrade;
 	}
 
-	public List<SchoolClassEntity> getSchoolGrade_SchoolClass() {
-		return schoolGrade_SchoolClass;
+	public List<SchoolClassEntity> getSchoolClass() {
+		return schoolClass;
 	}
 
-	public void setSchoolGrade_SchoolClass(List<SchoolClassEntity> schoolGrade_SchoolClass) {
-		this.schoolGrade_SchoolClass = schoolGrade_SchoolClass;
+	public void setSchoolClass(List<SchoolClassEntity> schoolClass) {
+		this.schoolClass = schoolClass;
 	}
 
 }

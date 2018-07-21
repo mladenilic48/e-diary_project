@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,17 +21,17 @@ public abstract class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column
+	@Column	
 	private String username;
 
 	@Column
 	@JsonIgnore
 	private String password;
 
-	@Column
+	@Column	
 	private String name;
 
-	@Column
+	@Column	
 	private String surname;
 
 	public UserEntity() {

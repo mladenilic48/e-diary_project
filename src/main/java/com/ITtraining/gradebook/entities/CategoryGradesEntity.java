@@ -30,9 +30,9 @@ public class CategoryGradesEntity {
 	@Column
 	private String category;
 
-	@OneToMany(mappedBy = "creatingGrades_CategoryGrade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "categoryGrade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<CreatingGradesEntity> categoryGrades_CreatingGrades = new ArrayList<>();
+	private List<CreatingGradesEntity> creatingGrades = new ArrayList<>();
 
 	public CategoryGradesEntity() {
 		super();
@@ -54,12 +54,12 @@ public class CategoryGradesEntity {
 		this.category = category;
 	}
 
-	public List<CreatingGradesEntity> getCategoryGrades_CreatingGrades() {
-		return categoryGrades_CreatingGrades;
+	public List<CreatingGradesEntity> getCreatingGrades() {
+		return creatingGrades;
 	}
 
-	public void setCategoryGrades_CreatingGrades(List<CreatingGradesEntity> categoryGrades_CreatingGrades) {
-		this.categoryGrades_CreatingGrades = categoryGrades_CreatingGrades;
+	public void setCreatingGrades(List<CreatingGradesEntity> creatingGrades) {
+		this.creatingGrades = creatingGrades;
 	}
 
 }

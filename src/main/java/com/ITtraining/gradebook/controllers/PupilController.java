@@ -3,6 +3,8 @@ package com.ITtraining.gradebook.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ITtraining.gradebook.controllers.util.RESTError;
+import com.ITtraining.gradebook.entities.ParentEntity;
 import com.ITtraining.gradebook.entities.PupilEntity;
+import com.ITtraining.gradebook.entities.SchoolClassEntity;
+import com.ITtraining.gradebook.entities.SchoolEntity;
 import com.ITtraining.gradebook.entities.dto.PupilDTO;
+import com.ITtraining.gradebook.repositories.ParentRepository;
 import com.ITtraining.gradebook.repositories.PupilRepository;
+import com.ITtraining.gradebook.repositories.SchoolClassRepository;
+import com.ITtraining.gradebook.repositories.SchoolRepository;
 
 @RestController
 @RequestMapping(value = "/api/v1/gradebook/pupils")
@@ -20,6 +28,25 @@ public class PupilController {
 
 	@Autowired
 	private PupilRepository pupilRepo;
+
+	@Autowired
+	private ParentRepository parentRepo;
+
+	@Autowired
+	private SchoolClassRepository schoolClassRepo;
+
+	@Autowired
+	private SchoolRepository schoolRepo;
+	
+	private String createErrorMessage(BindingResult result) {
+		String msg = " ";
+		for (ObjectError error : result.getAllErrors()) {
+			msg += error.getDefaultMessage();
+			msg += " ";
+		}
+		return msg;
+	}
+
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getPupils() {
@@ -37,8 +64,9 @@ public class PupilController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> addPupil(@RequestBody PupilDTO newPupil) {
+	@RequestMapping(method = RequestMethod.POST, value = "/parent/{parentId}/class/{classId}/school/{schoolId}")
+	public ResponseEntity<?> addPupil(@RequestBody PupilDTO newPupil, @PathVariable Integer parentId,
+			@PathVariable Integer classId, @PathVariable Integer schoolId) {
 
 		if (newPupil == null) {
 			return new ResponseEntity<RESTError>(new RESTError(2, "Pupil object is invalid."), HttpStatus.BAD_REQUEST);
@@ -50,24 +78,72 @@ public class PupilController {
 		}
 
 		PupilEntity pupilEntity = new PupilEntity();
+		ParentEntity parentEntity = null;
+
+		if (parentRepo.existsById(parentId)) {
+			parentEntity = parentRepo.findById(parentId).get();
+		} else {
+			return new ResponseEntity<RESTError>(new RESTError(1, "Parent with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		if (!schoolClassRepo.existsById(classId)) {
+			return new ResponseEntity<RESTError>(new RESTError(1, "School class with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		SchoolClassEntity schoolClassEntity = schoolClassRepo.findById(classId).get();
+
+		if (!schoolRepo.existsById(schoolId)) {
+			return new ResponseEntity<RESTError>(new RESTError(1, "School with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		SchoolEntity schoolEntity = schoolRepo.findById(schoolId).get();
+
 		pupilEntity.setName(newPupil.getName());
 		pupilEntity.setSurname(newPupil.getSurname());
 		pupilEntity.setUsername(newPupil.getUsername());
 		pupilEntity.setPassword(newPupil.getPassword());
 		pupilEntity.setUniquePupilNumber(newPupil.getUniquePupilNumber());
-//		pupilEntity.setSchoolClass(newPupil.getSchoolClass());
-//		pupilEntity.setClassNumber(newPupil.getClassNumber());
+		pupilEntity.setPupil_Parent(parentEntity);
+		pupilEntity.setPupil_SchoolClass(schoolClassEntity);
+		pupilEntity.setSchool(schoolEntity);
 
 		return new ResponseEntity<PupilEntity>(pupilRepo.save(pupilEntity), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	public ResponseEntity<?> updatePupil(@PathVariable Integer id, @RequestBody PupilDTO updatedPupil) {
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/parent/{parentId}/class/{classId}/school/{schoolId}")
+	public ResponseEntity<?> updatePupil(@PathVariable Integer id, @RequestBody PupilDTO updatedPupil,
+			@PathVariable Integer parentId, @PathVariable Integer classId, @PathVariable Integer schoolId) {
 
 		if (!pupilRepo.existsById(id)) {
 			return new ResponseEntity<RESTError>(new RESTError(1, "Pupil with provided Id not found."),
 					HttpStatus.NOT_FOUND);
 		}
+
+		ParentEntity parentEntity = null;
+
+		if (parentRepo.existsById(parentId)) {
+			parentEntity = parentRepo.findById(parentId).get();
+		} else {
+			return new ResponseEntity<RESTError>(new RESTError(1, "Parent with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		if (!schoolClassRepo.existsById(classId)) {
+			return new ResponseEntity<RESTError>(new RESTError(1, "School class with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		SchoolClassEntity schoolClassEntity = schoolClassRepo.findById(classId).get();
+
+		if (!schoolRepo.existsById(schoolId)) {
+			return new ResponseEntity<RESTError>(new RESTError(1, "School with provided Id not found."),
+					HttpStatus.NOT_FOUND);
+		}
+
+		SchoolEntity schoolEntity = schoolRepo.findById(schoolId).get();
 
 		PupilEntity pupilEntity = pupilRepo.findById(id).get();
 
@@ -91,13 +167,9 @@ public class PupilController {
 			pupilEntity.setUniquePupilNumber(updatedPupil.getUniquePupilNumber());
 		}
 
-//		if (updatedPupil.getSchoolClass() != null) {
-//			pupilEntity.setSchoolClass(updatedPupil.getSchoolClass());
-//		}
-//
-//		if (updatedPupil.getClassNumber() != null) {
-//			pupilEntity.setClassNumber(updatedPupil.getClassNumber());
-//		}
+		pupilEntity.setPupil_Parent(parentEntity);
+		pupilEntity.setPupil_SchoolClass(schoolClassEntity);
+		pupilEntity.setSchool(schoolEntity);
 
 		return new ResponseEntity<PupilEntity>(pupilRepo.save(pupilEntity), HttpStatus.OK);
 	}

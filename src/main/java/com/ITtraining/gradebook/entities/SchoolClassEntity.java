@@ -31,7 +31,7 @@ public class SchoolClassEntity {
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_grade")
-	private SchoolGradeEntity schoolClass_SchoolGrade;
+	private SchoolGradeEntity schoolGrade;
 
 	@Column(name = "class_no")
 	private Integer classNumber;
@@ -42,14 +42,6 @@ public class SchoolClassEntity {
 
 	public SchoolClassEntity() {
 		super();
-	}
-
-	public SchoolGradeEntity getSchoolClass_SchoolGrade() {
-		return schoolClass_SchoolGrade;
-	}
-
-	public void setSchoolClass_SchoolGrade(SchoolGradeEntity schoolClass_SchoolGrade) {
-		this.schoolClass_SchoolGrade = schoolClass_SchoolGrade;
 	}
 
 	public Integer getId() {
@@ -74,6 +66,14 @@ public class SchoolClassEntity {
 
 	public void setSchoolClass_Pupils(List<PupilEntity> schoolClass_Pupils) {
 		this.schoolClass_Pupils = schoolClass_Pupils;
+	}
+
+	public SchoolGradeEntity getSchoolGrade() {
+		return schoolGrade;
+	}
+
+	public void setSchoolGrade(SchoolGradeEntity schoolGrade) {
+		this.schoolGrade = schoolGrade;
 	}
 
 }

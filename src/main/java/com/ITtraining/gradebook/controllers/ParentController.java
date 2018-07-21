@@ -1,8 +1,12 @@
 package com.ITtraining.gradebook.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +25,15 @@ public class ParentController {
 	@Autowired
 	private ParentRepository parentRepo;
 
+	private String createErrorMessage(BindingResult result) {
+		String msg = " ";
+		for (ObjectError error : result.getAllErrors()) {
+			msg += error.getDefaultMessage();
+			msg += " ";
+		}
+		return msg;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getParents() {
 		return new ResponseEntity<Iterable<ParentEntity>>(parentRepo.findAll(), HttpStatus.OK);
@@ -38,15 +51,9 @@ public class ParentController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> addParent(@RequestBody ParentDTO newParent) {
-
-		if (newParent == null) {
-			return new ResponseEntity<RESTError>(new RESTError(2, "Parent object is invalid."), HttpStatus.BAD_REQUEST);
-		}
-
-		if (newParent.getName() == null || newParent.getSurname() == null || newParent.getUsername() == null
-				|| newParent.getPassword() == null) {
-			return new ResponseEntity<RESTError>(new RESTError(2, "Parent object is invalid."), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> addParent(@Valid @RequestBody ParentDTO newParent, BindingResult result) {
+		if (result.hasErrors()) {
+			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
 		}
 
 		ParentEntity parentEntity = new ParentEntity();
@@ -61,7 +68,6 @@ public class ParentController {
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	public ResponseEntity<?> updateParent(@PathVariable Integer id, @RequestBody ParentDTO updateParent) {
-
 		if (!parentRepo.existsById(id)) {
 			return new ResponseEntity<RESTError>(new RESTError(1, "Parent with provided Id not found."),
 					HttpStatus.NOT_FOUND);

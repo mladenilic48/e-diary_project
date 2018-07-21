@@ -1,14 +1,25 @@
 package com.ITtraining.gradebook.entities.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class PupilDTO {
 
+	@NotNull(message = "Name must be provided.")
 	private String name;
+	
+	@NotNull(message = "Surname must be provided.")
 	private String surname;
+	
+	@NotNull(message = "Username must be provided.")
+	@Size(min = 5, max = 20, message = "Username must be between {min} and {max} characters long.")
 	private String username;
+	
+	@NotNull(message = "Password must be provided.")
+	@Pattern(regexp = "^[A-Za-z0-9]{5,}$", message = "Password is not valid.")
 	private String password;
 	private String uniquePupilNumber;
-	private Integer schoolClass;
-	private Integer classNumber;
 
 	public PupilDTO() {
 		super();
@@ -52,22 +63,6 @@ public class PupilDTO {
 
 	public void setUniquePupilNumber(String uniquePupilNumber) {
 		this.uniquePupilNumber = uniquePupilNumber;
-	}
-
-	public Integer getSchoolClass() {
-		return schoolClass;
-	}
-
-	public void setSchoolClass(Integer schoolClass) {
-		this.schoolClass = schoolClass;
-	}
-
-	public Integer getClassNumber() {
-		return classNumber;
-	}
-
-	public void setClassNumber(Integer classNumber) {
-		this.classNumber = classNumber;
 	}
 
 }

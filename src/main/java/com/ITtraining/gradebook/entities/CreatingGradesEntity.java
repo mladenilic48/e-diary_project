@@ -34,7 +34,7 @@ public class CreatingGradesEntity {
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
-	private CategoryGradesEntity creatingGrades_CategoryGrade;
+	private CategoryGradesEntity categoryGrade;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "pupil")
@@ -76,14 +76,6 @@ public class CreatingGradesEntity {
 		this.semester = semester;
 	}
 
-	public CategoryGradesEntity getCreatingGrades_CategoryGrade() {
-		return creatingGrades_CategoryGrade;
-	}
-
-	public void setCreatingGrades_CategoryGrade(CategoryGradesEntity creatingGrades_CategoryGrade) {
-		this.creatingGrades_CategoryGrade = creatingGrades_CategoryGrade;
-	}
-
 	public PupilEntity getCreatingGrades_Pupil() {
 		return creatingGrades_Pupil;
 	}
@@ -106,6 +98,14 @@ public class CreatingGradesEntity {
 
 	public void setCreatingGrades_Grade(GradeEntity creatingGrades_Grade) {
 		this.creatingGrades_Grade = creatingGrades_Grade;
+	}
+
+	public CategoryGradesEntity getCategoryGrade() {
+		return categoryGrade;
+	}
+
+	public void setCategoryGrade(CategoryGradesEntity categoryGrade) {
+		this.categoryGrade = categoryGrade;
 	}
 
 }

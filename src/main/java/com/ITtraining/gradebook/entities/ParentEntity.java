@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,6 +29,8 @@ public class ParentEntity extends UserEntity {
 	private Integer id;
 
 	@Column(name = "email")
+	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "E-mail is not valid.")
 	private String email;
 
 	@OneToMany(mappedBy = "pupil_Parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
